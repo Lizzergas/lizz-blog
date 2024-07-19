@@ -1,0 +1,15 @@
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Visual Studio Code configuration directory
+.vscode/
+
+# Ignore build output directory
+build/
+
+# Ignore logs directory
+logs/
+
+# Ignore compiled nginx configuration file
+nginx.conf.compiled
+
