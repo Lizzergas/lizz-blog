@@ -16,4 +16,3 @@ So yeah, that’s pretty much it, lots of empty words in this blog, but fuck it.
 
 Thank you for reading and have a good one~
 Lizz
-#daily/blog
