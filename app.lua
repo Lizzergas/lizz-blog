@@ -39,22 +39,12 @@ end
 
 -- Web head
 local function web_head(ttl, desc)
-  local css_style =
-      [[
-          body {
-            font-family: Arial, sans-serif;
-          }
-          nav a {
-            padding: 8px; 
-          }
-    ]]
-
   return function()
     title(ttl)
     meta({charset = "utf-8"})
     meta({name = "viewport", content = "width=device-width, initial-scale=1"})
-    meta({naem = "description", content = desc})
-    style(css_style)
+    meta({name = "description", content = desc})
+    link({rel = "stylesheet", href = "/static/style.css"})
   end
 end
 
@@ -76,10 +66,30 @@ app:get("/", function(self)
       head(web_head("Home", "Welcome to my blog! Explore my projects, journey, and latest blog posts."))
       body(function()
         nav(nav_bar())
-        hr()
         h1("Lizz Development Blog")
         h2("Status: Under Construction")
         p("Hihi~ I've decided to start blogging on 2024-07-19. So far we got this crappy website. Yay. Not planning to update it, but planning to write some content.")
+        
+        -- Subscription form
+        form({method = "post", action = "https://mail.lizz.dev/subscription/form", class = "listmonk-form"}, function()
+          div(function()
+            h3("Subscribe to our Newsletter")
+            input({type = "hidden", name = "nonce"})
+            p(function()
+              input({type = "email", name = "email", required = true, placeholder = "E-mail"})
+            end)
+            p(function()
+              input({type = "text", name = "name", placeholder = "Name (optional)"})
+            end)
+            p(function()
+              input({id = "ea928", type = "checkbox", name = "l", checked = true, value = "ea9282ad-1372-4a22-803e-4a2bf6dac4ed"})
+              label({["for"] = "ea928"}, "Opt-in list")
+            end)
+            p(function()
+              input({type = "submit", value = "Subscribe"})
+            end)
+          end)
+        end)
       end)
     end)
   end)
@@ -92,7 +102,6 @@ app:get("/projects", function(self)
       head(web_head("My Projects", "Discover my projects and coding adventures."))
       body(function()
         nav(nav_bar())
-        hr()
         h1("My Projects")
         p("Slacker with no projects yet...")
       end)
@@ -104,10 +113,9 @@ end)
 app:get("/journey", function(self)
   return self:html(function()
     html(function()
-      head(web_head("Journey"), "Read about my journey and experiences.")
+      head(web_head("Journey", "Read about my journey and experiences."))
       body(function()
         nav(nav_bar())
-        hr()
         h1("Journey")
         p("This is the Journey page.")
       end)
@@ -124,7 +132,6 @@ app:get("/blog", function(self)
       head(web_head("Blog", "Browse my latest blog posts about my development experience."))
       body(function()
         nav(nav_bar())
-        hr()
         h1("Blog")
         ul(function()
           for _, file in ipairs(blog_files) do
@@ -160,7 +167,6 @@ app:get("/blog/:post", function(self)
       head(web_head(post_name))
       body(function()
         nav(nav_bar())
-        hr()
         raw(my_html) -- Insert the raw HTML content here
       end)
     end)
