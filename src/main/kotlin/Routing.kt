@@ -6,6 +6,7 @@ import io.ktor.htmx.*
 import io.ktor.htmx.html.*
 import io.ktor.server.application.*
 import io.ktor.server.html.*
+import io.ktor.server.http.content.staticResources
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.*
@@ -17,6 +18,12 @@ private fun HTML.siteHead(titleText: String = "HTMX + Tailwind + Ktor") {
         script(src = "https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js") {}
         script { src = "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" }
         title { +titleText }
+
+        link {
+            rel = "icon"
+            type = "image/x-icon"
+            href = "/favicon.png?v=1"
+        }
     }
 }
 
@@ -86,6 +93,7 @@ private fun BODY.navbar(currentPath: String) {
 
 fun Application.configureRouting() {
     routing {
+        staticResources("/", "static")
         get("/") {
             call.respondHtml {
                 siteHead("Blog • HTMX + Tailwind + Ktor")
