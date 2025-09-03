@@ -1,0 +1,25 @@
+[versions]
+kotlin = "2.2.10"
+ktor = "3.2.3"
+logback = "1.4.14"
+flexmark = "0.64.8"
+datetime = "0.7.1"
+
+[libraries]
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-core-jvm = { group = "io.ktor", name = "ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
+ktor-server-config-yaml = { group = "io.ktor", name = "ktor-server-config-yaml", version.ref = "ktor" }
+ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host", version.ref = "ktor" }
+ktor-htmx = { group = "io.ktor", name = "ktor-htmx", version.ref = "ktor" }
+ktor-htmx-html = { group = "io.ktor", name = "ktor-htmx-html", version.ref = "ktor" }
+ktor-server-htmx = { group = "io.ktor", name = "ktor-server-htmx", version.ref = "ktor" }
+ktor-server-html-builder = { group = "io.ktor", name = "ktor-server-html-builder", version.ref = "ktor" }
+flexmark = { group = "com.vladsch.flexmark", name = "flexmark-all", version.ref = "flexmark" }
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime"}
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
