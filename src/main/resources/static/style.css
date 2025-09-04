@@ -1,10 +1,5 @@
 /* --- Animations & Effects --- */
 @keyframes blink { 50% { opacity: 0; } }
-@keyframes scanline { 100% { transform: translateY(100%); } }
-@keyframes border-anim {
-    0% { left: -100%; }
-    50%, 100% { left: 100%; }
-}
 
 /* --- Base Styles --- */
 body {
@@ -21,35 +16,6 @@ body {
     color: #34d399; /* emerald-400 */
 }
 
-.scanline-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.2) 51%);
-    background-size: 100% 4px;
-    animation: scanline 8s linear infinite;
-}
-
-.animated-border {
-    position: relative;
-    overflow: hidden;
-    border-radius: 0.75rem; /* rounded-xl */
-}
-.animated-border::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #34d399);
-    animation: border-anim 3s linear infinite;
-    animation-delay: 1s;
-}
 
 /* --- Interactions --- */
 a, button {

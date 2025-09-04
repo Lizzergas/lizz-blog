@@ -100,7 +100,6 @@ internal fun HTML.page(call: ApplicationCall, title: String, description: String
     attributes["lang"] = "en"
     siteHead(title, description)
     body(classes = "bg-neutral-950 min-h-screen text-neutral-200 font-mono") {
-        div(classes = "scanline-overlay") {}
         navbar(call.request.path())
         block()
     }
@@ -118,7 +117,7 @@ internal fun FlowContent.pageHeader(text: String, vararg classes: String, withCu
 }
 
 internal fun FlowContent.postCard(post: BlogPost) {
-    article(classes = "bg-neutral-900 border border-neutral-800 rounded-xl p-6 space-y-3 animated-border") {
+    article(classes = "bg-neutral-900 border border-neutral-800 rounded-xl p-6 space-y-3") {
         a(href = "/blog/${post.slug}", classes = "text-2xl font-semibold text-emerald-400 hover:text-emerald-300") {
             +post.title
         }
@@ -127,10 +126,10 @@ internal fun FlowContent.postCard(post: BlogPost) {
         div {
             a(
                 href = "/blog/${post.slug}",
-                classes = "inline-block mt-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-neutral-950 font-semibold ring-1 ring-emerald-500/40 shadow"
+                classes = "inline-block mt-1 px-2 py-1 rounded-md bg-emerald-600 hover:bg-emerald-500 text-neutral-950 text-sm font-semibold ring ring-emerald-500/40 shadow-sm"
             ) {
                 attributes["aria-label"] = "Read more about ${post.title}"
-                +"Read more: ${post.title}"
+                +"Read more"
             }
         }
     }

@@ -14,7 +14,7 @@ internal suspend fun ApplicationCall.respondBlogPage() {
         respondHtml {
             page(this@respondBlogPage, post.title, description = post.excerpt) {
                 mainContent {
-                    article(classes = "prose prose-invert max-w-none space-y-4 p-6 bg-neutral-900/50 border border-neutral-800 rounded-xl animated-border") {
+                    article(classes = "prose prose-invert max-w-none space-y-4 p-6 bg-neutral-900/50 border border-neutral-800 rounded-xl") {
                         h1(classes = "text-3xl font-bold text-neutral-100 mb-2") { +post.title }
                         div(classes = "text-sm text-neutral-400 mb-6") { +formatDate(post.date) }
                         unsafe { +post.contentHtml }
