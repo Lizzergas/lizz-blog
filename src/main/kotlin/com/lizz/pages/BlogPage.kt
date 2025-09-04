@@ -27,7 +27,7 @@ internal suspend fun ApplicationCall.respondBlogPage() {
                         button(type = ButtonType.button, classes = "absolute top-3 right-3 inline-flex items-center justify-center w-9 h-9 rounded-md bg-neutral-800/70 hover:bg-neutral-700 text-neutral-200 text-lg ring-1 ring-neutral-700/60 shadow") {
                             attributes["title"] = "Copy clean article text to clipboard"
                             attributes["aria-label"] = "Copy clean article text to clipboard"
-                            attributes["onclick"] = "copyWholePage(event)"
+                            attributes["onclick"] = "copyWholePage(this)"
                             +"📋"
                         }
 
@@ -44,13 +44,23 @@ internal suspend fun ApplicationCall.respondBlogPage() {
                         unsafe {
                             +"""
                             (function(){
-                              window.copyWholePage = async function(evt){
+                              window.copyWholePage = async function(target){
                                 try {
-                                  var article = (evt && evt.currentTarget) ? evt.currentTarget.closest('article') : document.querySelector('article');
+                                  var btn = null;
+                                  var article = null;
+                                  if (target && target.nodeType === 1) { // element passed via onclick="copyWholePage(this)"
+                                    btn = target;
+                                    article = btn.closest('article');
+                                  } else if (target && target.currentTarget) { // event object
+                                    btn = target.currentTarget;
+                                    article = btn.closest('article');
+                                  } else {
+                                    article = document.querySelector('article');
+                                  }
                                   if (!article) return;
                                   var titleEl = article.querySelector('h1');
                                   var title = titleEl ? (titleEl.textContent || '').trim() : '';
-                                  var dateEl = article.querySelector('[data-role="post-date"]');
+                                  var dateEl = article.querySelector('[data-role=\"post-date\"]');
                                   var date = dateEl ? (dateEl.textContent || '').trim() : '';
                                   var paras = Array.from(article.querySelectorAll('p'))
                                     .map(function(p){ return (p.textContent || '').trim(); })
@@ -70,11 +80,15 @@ internal suspend fun ApplicationCall.respondBlogPage() {
                                     document.execCommand('copy');
                                     document.body.removeChild(ta);
                                   }
-                                  var btn = evt && evt.currentTarget;
                                   if (btn) {
-                                    var prev = btn.textContent;
-                                    btn.textContent = 'Copied!';
-                                    setTimeout(function(){ btn.textContent = '📋'; }, 1200);
+                                    var prevText = btn.textContent;
+                                    var prevAria = btn.getAttribute('aria-label');
+                                    btn.textContent = '✅';
+                                    btn.setAttribute('aria-label', 'Copied to clipboard');
+                                    setTimeout(function(){
+                                      btn.textContent = '📋';
+                                      if (prevAria) btn.setAttribute('aria-label', prevAria);
+                                    }, 1200);
                                   }
                                 } catch (e) {
                                   alert('Copy failed. You can Select All and copy manually.');
