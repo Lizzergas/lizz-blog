@@ -19,8 +19,6 @@ data class BlogPost(
 object BlogService {
     private val parser: Parser = Parser.builder().build()
     private val renderer: HtmlRenderer = HtmlRenderer.builder()
-        .softBreak("<br>")
-        .escapeHtml(true)
         .build()
 
     private val posts: List<BlogPost> by lazy { loadAllPosts() }

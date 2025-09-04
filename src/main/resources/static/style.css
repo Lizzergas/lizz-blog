@@ -1,5 +1,9 @@
 /* --- Animations & Effects --- */
-@keyframes blink { 50% { opacity: 0; } }
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
 
 /* --- Base Styles --- */
 body {
@@ -21,6 +25,7 @@ body {
 a, button {
     transition: all 0.2s ease-in-out;
 }
+
 a:hover, button:hover {
     transform: translateY(-2px);
     text-shadow: 0 0 10px rgba(50, 255, 150, 0.6);
@@ -28,12 +33,44 @@ a:hover, button:hover {
 }
 
 /* --- Page Transitions (HTMX + View Transitions API) --- */
-@keyframes slide-out { to { transform: translateX(-30px); opacity: 0; } }
-@keyframes slide-in { from { transform: translateX(30px); opacity: 0; } }
+@keyframes slide-out {
+    to {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+}
 
 ::view-transition-old(root) {
     animation: 200ms ease-out both slide-out;
 }
+
 ::view-transition-new(root) {
     animation: 200ms ease-in both slide-in;
+}
+
+/* --- Markdown code blocks --- */
+pre {
+    background: rgba(24, 24, 27, 0.8); /* neutral-900-ish */
+    border: 1px solid #27272a; /* neutral-800 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+code {
+    background: rgba(24, 24, 27, 0.6);
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.35rem;
+}
+
+pre code {
+    background: transparent;
+    padding: 0;
 }
