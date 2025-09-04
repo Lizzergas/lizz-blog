@@ -11,7 +11,7 @@ import kotlinx.html.*
 
 internal suspend fun ApplicationCall.respondTestPage() {
     respondHtml {
-        page(this@respondTestPage, "Test • HTMX + Tailwind + Ktor") {
+        page(this@respondTestPage, "Test") {
             mainContent {
                 div(classes = "flex items-start justify-center") {
                     div(classes = "max-w-lg w-full bg-neutral-900 border border-neutral-800 shadow-xl rounded-2xl p-8 space-y-6 animated-border") {

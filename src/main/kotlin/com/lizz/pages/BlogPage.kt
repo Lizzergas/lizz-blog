@@ -12,7 +12,7 @@ internal suspend fun ApplicationCall.respondBlogPage() {
         return respondNotFound(this)
     } else {
         respondHtml {
-            page(this@respondBlogPage, "${post.title} • Blog") {
+            page(this@respondBlogPage, post.title, description = post.excerpt) {
                 mainContent {
                     article(classes = "prose prose-invert max-w-none space-y-4 p-6 bg-neutral-900/50 border border-neutral-800 rounded-xl animated-border") {
                         h1(classes = "text-3xl font-bold text-neutral-100 mb-2") { +post.title }

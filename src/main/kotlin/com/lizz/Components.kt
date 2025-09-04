@@ -7,8 +7,17 @@ import io.ktor.server.request.*
 import kotlinx.datetime.LocalDate
 import kotlinx.html.*
 
-internal fun HTML.siteHead(titleText: String = "HTMX + Tailwind + Ktor") {
+internal fun HTML.siteHead(titleText: String = "lizz.dev", description: String? = null) {
     head {
+        meta {
+            name = "viewport"
+            content = "width=device-width, initial-scale=1"
+        }
+        meta {
+            name = "description"
+            content = (description?.takeIf { it.isNotBlank() }
+                ?: "Personal blog by Lizz. Developed with Ktor + HTMX + Tailwind")
+        }
         script(src = "https://cdn.jsdelivr.net/npm/htmx.org@2.0.6/dist/htmx.min.js") {}
         script { src = "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" }
         title { +titleText }
@@ -86,8 +95,10 @@ internal fun BODY.navbar(currentPath: String) {
     }
 }
 
-internal fun HTML.page(call: ApplicationCall, title: String, block: BODY.() -> Unit) {
-    siteHead(title)
+internal fun HTML.page(call: ApplicationCall, title: String, description: String? = null, block: BODY.() -> Unit) {
+    // Accessibility / i18n
+    attributes["lang"] = "en"
+    siteHead(title, description)
     body(classes = "bg-neutral-950 min-h-screen text-neutral-200 font-mono") {
         div(classes = "scanline-overlay") {}
         navbar(call.request.path())
@@ -117,14 +128,17 @@ internal fun FlowContent.postCard(post: BlogPost) {
             a(
                 href = "/blog/${post.slug}",
                 classes = "inline-block mt-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-neutral-950 font-semibold ring-1 ring-emerald-500/40 shadow"
-            ) { +"Read More" }
+            ) {
+                attributes["aria-label"] = "Read more about ${post.title}"
+                +"Read more: ${post.title}"
+            }
         }
     }
 }
 
 internal suspend fun respondNotFound(call: ApplicationCall) {
     call.respondHtml(HttpStatusCode.NotFound) {
-        page(call, "Not Found • HTMX + Tailwind + Ktor") {
+        page(call, "Not Found • lizz.dev") {
             mainContent {
                 pageHeader("Post Not Found")
                 p(classes = "mt-4 text-neutral-300") { +"The requested post could not be found." }

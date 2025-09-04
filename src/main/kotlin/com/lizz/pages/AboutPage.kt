@@ -9,7 +9,11 @@ import kotlinx.html.p
 
 internal suspend fun ApplicationCall.respondAboutPage() {
     respondHtml {
-        page(this@respondAboutPage, "About • HTMX + Tailwind + Ktor") {
+        page(
+            this@respondAboutPage,
+            "About",
+            description = "About Lizz and this Ktor + HTMX + Tailwind sample blog."
+        ) {
             mainContent {
                 pageHeader("About")
                 p(classes = "mt-4 text-neutral-300") { +"This sample showcases Ktor with HTMX and Tailwind, rendered server-side with kotlinx.html." }

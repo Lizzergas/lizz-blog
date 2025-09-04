@@ -94,7 +94,7 @@ Components are reusable pieces of UI defined as Kotlin extension functions in `s
 
     internal suspend fun ApplicationCall.respondContactPage() {
         respondHtml {
-            page(this@respondContactPage, "Contact • My Blog") {
+            page(this@respondContactPage, "Contact • lizz.dev") {
                 mainContent {
                     pageHeader("Contact Me")
                     p(classes = "mt-4 text-neutral-300") {

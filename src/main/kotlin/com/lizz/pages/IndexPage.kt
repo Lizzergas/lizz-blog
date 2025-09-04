@@ -9,7 +9,11 @@ internal suspend fun ApplicationCall.respondIndexPage() {
     val latest = BlogService.latest(5)
     val all = BlogService.all()
     respondHtml {
-        page(this@respondIndexPage, "Blog • HTMX + Tailwind + Ktor") {
+        page(
+            this@respondIndexPage,
+            "lizz.dev",
+            description = "Latest posts and notes by Lizz — Made with HTMX + Tailwind + Ktor. Experimenting with various things."
+        ) {
             div(classes = "mx-auto max-w-5xl px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8") {
                 div(classes = "md:col-span-2 space-y-6") {
                     id = "blog-content"
