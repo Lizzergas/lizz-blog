@@ -1,121 +1,15 @@
-# Project Guidelines — ktor-pure-htmx
+# Project guidelines — lizz.dev
 
-This document records project-specific practices for building, testing, and extending this Ktor + HTMX sample. It assumes familiarity with Kotlin, Gradle, and Ktor 3.x.
+Lizz Studio portfolio and Markdown blog, using Node.js 24 LTS, plain HTML and CSS. Keep it small: no frontend framework, bundler, CSS runtime, database, web fonts or third-party browser assets.
 
-## Stack Overview
-- Kotlin: 2.2.10 (versions defined in `gradle/libs.versions.toml`)
-- Ktor: 3.2.3
-- Gradle: via wrapper in repo
-- Runtime entrypoint: `io.ktor.server.netty.EngineMain` (configured by Ktor Gradle plugin)
-- Application module: `com.lizz.ApplicationKt.module` (wired in `src/main/resources/application.yaml`)
-- Logging: Logback (`src/main/resources/logback.xml`)
-- UI: HTMX + Tailwind CSS via CDN; server-side HTML via `kotlinx.html` DSL
-
-## Build and Run
-The project uses the Ktor Gradle plugin; standard tasks are available via the wrapper.
-
-- Build: `./gradlew build`
-- Run (dev): `./gradlew run`
-  - Dev mode is enabled via `application.yaml` (`ktor.development: true`). You can also set `-Dio.ktor.development=true`.
-- Fat JAR: `./gradlew buildFatJar`
-- Docker image: `./gradlew buildImage`
-- Run Docker image: `./gradlew runDocker`
-
-Configuration is primarily driven by `src/main/resources/application.yaml`:
-
-```
-ktor:
-  application:
-    modules:
-      - com.lizz.ApplicationKt.module
-  deployment:
-    port: 8080
-  development: true
-```
-
-To override the port at runtime without editing the file:
-- Env var: `KTOR_DEPLOYMENT_PORT=9090 ./gradlew run`
-- Or JVM arg: `./gradlew run --args="-port=9090"` (Ktor also recognizes `-P:ktor.deployment.port=9090` style properties when passed as config properties).
-
-Notes:
-- The Ktor plugin wires `EngineMain` and picks up `application.yaml` automatically. If you change the module FQN or add modules, update `application.yaml` accordingly.
-- Logging level is configured in `logback.xml`. For deeper diagnostics, temporarily change `<root level="INFO">` to `DEBUG`.
-
-## Testing
-Dependencies already present:
-- `testImplementation(libs.ktor.server.test.host)`
-- `testImplementation(libs.kotlin.test)`
-
-Recommended conventions:
-- Place tests under `src/test/kotlin`.
-- Prefer `testApplication { ... }` from `ktor-server-test-host` for HTTP-level testing without starting a real server.
-- Keep production wiring simple: `Application.module()` should install features and call small, focused configuration functions (e.g., `configureRouting()`), making it easy to boot in tests.
-
-Run all tests:
-- `./gradlew test`
-
-Run a specific test class/method:
-- By class: `./gradlew test --tests 'com.lizz.AppSmokeTest'`
-- By method: `./gradlew test --tests 'com.lizz.AppSmokeTest.data endpoint returns dynamic content'`
-
-Increase Gradle log verbosity when debugging CI/test issues:
-- `./gradlew test --info` or `--stacktrace`
-
-### Example: Minimal HTTP smoke tests (validated)
-The following worked locally against this repository using `ktor-server-test-host`:
-
-```kotlin
-class AppSmokeTest {
-    @Test
-    fun `root page renders HTML with HTMX and Tailwind`() = testApplication {
-        application { module() }
-
-        val res = client.get("/")
-        assertEquals(HttpStatusCode.OK, res.status)
-        val body = res.bodyAsText()
-        assertTrue(body.contains("htmx.min.js"), "Expected HTMX script tag")
-        assertTrue(body.contains("HTMX + Tailwind + Ktor"), "Expected page title text")
-        assertTrue(body.contains("Load Content"), "Expected load button")
-    }
-
-    @Test
-    fun `data endpoint returns dynamic content`() = testApplication {
-        application { module() }
-
-        val res = client.get("/data")
-        assertEquals(HttpStatusCode.OK, res.status)
-        val body = res.bodyAsText()
-        assertTrue(body.contains("Hello from dynamically loaded Ktor content"))
-    }
-}
-```
-
-How to add a new test:
-- Create a new `*Test.kt` under `src/test/kotlin` in the `com.lizz` package (or another relevant package).
-- Use `testApplication { application { module() } ... }` to hit routes via `client`.
-- Assert status codes, headers, and relevant HTML fragments. Since UI is generated with `kotlinx.html`, verifying key text is typically sufficient for server-side correctness.
-
-Tips:
-- If your test requires different configuration (e.g., non-default port or features), you can install plugins directly inside the `testApplication` `application {}` block, or load an alternate HOCON/YAML with `createTestEnvironment` and a custom config if needed.
-- Avoid network flakiness: `testApplication` runs in-memory; do not start Netty.
-
-## Development Notes & Conventions
-- Routing and HTML:
-  - HTML is generated with `kotlinx.html` DSL. Keep rendering in small functions to ease reuse and testing.
-  - HTMX integration uses `io.ktor.htmx.*` and `io.ktor.htmx.html.*` helpers. Attributes are set through `attributes.hx { ... }`. Example in `Routing.kt` uses `HxSwap.innerHtml` and `get = "/data"`.
-  - Tailwind CSS v4 browser CDN is referenced directly. No local node pipeline is used; changes require only server restart (or dev auto-reload) to reflect HTML updates.
-- Configuration management:
-  - Centralize dependency versions in `gradle/libs.versions.toml` and reference them from `build.gradle.kts` (already in place). Update versions here first to keep plugin and libraries in sync.
-  - `application.yaml` is the single source of truth for module wiring. If you add features/modules (e.g., ContentNegotiation, serialization), wire them in `Application.module()` and keep routing in separate functions.
-- Logging & troubleshooting:
-  - Use Logback config to elevate log levels temporarily.
-  - For HTTP debugging in tests, print response bodies if assertions fail. Keep test logs concise in CI to reduce noise.
-- Docker:
-  - Ktor plugin tasks `buildImage` and `runDocker` require Docker installed and running. The produced image embeds the fat JAR built by `buildFatJar`.
-
-## Verified Commands (on this repo)
-- `./gradlew test` — executed successfully; sample tests passed.
-- `./gradlew run` — starts server on `http://0.0.0.0:8080` as defined in `application.yaml`.
-- `./gradlew build` — standard assemble with tests.
-
-This document is intended to be maintained along with the codebase. Update it when changing build tooling, configuration, or testing practices.
+- Install with npm ci, develop with npm run dev (wrangler dev), build with npm run build, and verify with npm test.
+- build.js writes the whole site into dist/, which Cloudflare Workers Static Assets serves. Only generated pages, crawler files and public/ belong in dist/. Security and cache headers live in the generated _headers file; keep it under Cloudflare's limits (100 rules, 2,000 characters per value).
+- site.js renders views/*.html at build time. Template values are escaped by default. Raw HTML is reserved for rendered templates and trusted Markdown. Escape '<' in JSON-LD.
+- posts.js discovers content/posts/YYYY-MM-DD-slug.md. Preserve published slugs. A leading `<!-- unlisted -->` marker keeps an article reachable with noindex while omitting it from listings, RSS and sitemap. Parse dates in UTC, reject malformed dates and duplicate slugs, and render a single article H1. Use the HTML parser at build time to extract readable titles/previews with decoded entities and normalize both Markdown and authored HTML headings. Keep code examples intact. This is formatting, not sanitization; Markdown remains trusted author content.
+- Keep the approved dark slate, system-sans, two-column design in public/style.css. The studio gecko is circular; Games is the default category, containing Chop Farms then grayscale Clankerfront marked Paused in muted amber below its description; Chop Farms has a muted green In development label in the same position; Apps contains only Never Sleep. Keep category switching native HTML/CSS with keyboard support. Align the studio description with the page heading under the topbar. The viewport-anchored forest must be visible before scrolling without adding document height. Keep the copy feature removed. Animations are limited to the short category-panel transition and gentle project-icon hover/focus scaling; respect reduced motion and keep content below it stationary. Navigation and project names must reflow at enlarged text sizes without horizontal overflow.
+- Use ordinary anchor navigation. All pages and metadata work without JavaScript; no page loads executable JavaScript. Blog preview dates follow their titles with a modest gap and no separator, wrapping below when needed. Blog previews link to full articles; Blog and About belong in the topbar, and the studio mark links home. Contact, the email address and icon-only X/YouTube links belong in the footer; preserve accessible names and touch targets. Do not restore Work, HTMX or a client-side router.
+- Keep navigation and category transitions native HTML/CSS. Avoid inline event handlers and CDNs. Bump asset version queries in templates/metadata when changing deployed assets.
+- Keep titles, descriptions, canonicals, social cards, schema, RSS, robots and sitemap aligned with public routes. The canonical origin is fixed, never taken from Host headers. Errors return real 404/noindex responses.
+- Tests use node:test; cover meaningful route, Markdown, metadata, caching and security regressions.
+- wrangler.jsonc targets the existing lizz-blog Worker with the lizz.dev and www.lizz.dev custom domains. Do not create a new Worker or alter DNS for a code update.
+- Keep README aligned with the implementation. Never claim a browser check, deployment ran unless it did.

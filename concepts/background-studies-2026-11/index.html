@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lizz Studio background studies</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:var(--font-sans,system-ui,sans-serif);color:var(--foreground,#eee)}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}button{font:inherit;font-size:14px;cursor:pointer;padding:10px 12px;color:var(--foreground,#eee);background:var(--secondary,#222);border:1px solid var(--border,#444);border-radius:var(--radius,6px)}
+button[aria-pressed=true]{background:var(--primary,#ddd);color:var(--primary-foreground,#111)}
+button:focus-visible{outline:2px solid var(--ring,#98adff);outline-offset:3px}
+figure{margin:0}figure[hidden]{display:none}img{display:block;width:100%;height:auto}
+</style></head><body><nav aria-label="Background concept">
+<button type="button" data-view="current" aria-pressed="false">Current</button>
+<button type="button" data-view="facets" aria-pressed="false">1 · Faceted slate</button>
+<button type="button" data-view="groves" aria-pressed="true">2 · Corner groves</button>
+<button type="button" data-view="forest" aria-pressed="false">3 · Forest edge</button>
+</nav>
+<figure id="current" hidden><img src="/Users/skommy/src/lizz-blog/concepts/background-studies-2026-11/current-layout.png" alt="Current Lizz Studio website with a plain dark slate background"></figure>
+<figure id="facets" hidden><img src="/Users/skommy/src/lizz-blog/concepts/background-studies-2026-11/01-faceted-slate.png" alt="Background concept 1: subtle faceted slate terrain, with the existing Lizz Studio layout"></figure>
+<figure id="groves"><img src="/Users/skommy/src/lizz-blog/concepts/background-studies-2026-11/02-corner-groves.png" alt="Background concept 2: small muted low-poly tree groves around the page corners, with the existing layout"></figure>
+<figure id="forest" hidden><img src="/Users/skommy/src/lizz-blog/concepts/background-studies-2026-11/03-forest-edge.png" alt="Background concept 3: a richer low-poly forest along the lower edge, keeping the text area clear"></figure>
+<script>document.querySelectorAll('nav button').forEach(button=>button.addEventListener('click',()=>{
+document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+document.querySelectorAll('figure').forEach(f=>f.hidden=f.id!==button.dataset.view);
+}));</script></body></html>

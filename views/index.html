@@ -1,0 +1,57 @@
+<section id="projects" aria-labelledby="projects-title">
+  <h1 id="projects-title">Projects</h1>
+  <fieldset class="project-categories">
+    <legend class="sr-only">Project category</legend>
+    <input class="sr-only" type="radio" name="project-category" id="category-games" aria-controls="games-panel" checked>
+    <label class="project-tab" for="category-games">Games</label>
+    <input class="sr-only" type="radio" name="project-category" id="category-apps" aria-controls="apps-panel">
+    <label class="project-tab" for="category-apps">Apps</label>
+    <div class="project-panels">
+      <div class="project-panel project-panel-games" id="games-panel">
+        <ul class="projects">
+          <li class="project">
+            <a class="project-image" href="https://chopfarms.com/" aria-label="Visit Chop Farms">
+              <img src="/images/chop-farms.webp" srcset="/images/chop-farms.webp 1x, /images/chop-farms@2x.webp 2x" width="88" height="88" alt="" decoding="async">
+            </a>
+            <div class="project-copy">
+              <h3><a href="https://chopfarms.com/">Chop Farms</a></h3>
+              <p>Fantasy real-time strategy for PC and mobile.</p>
+              <p class="project-status project-status-active">In development</p>
+              <a class="project-url" href="https://chopfarms.com/">chopfarms.com</a>
+            </div>
+          </li>
+          <li class="project project-paused">
+            <a class="project-image" href="https://clankerfront.com/" aria-label="Visit Clankerfront, development paused">
+              <img src="/images/clankerfront.webp" srcset="/images/clankerfront.webp 1x, /images/clankerfront@2x.webp 2x" width="88" height="88" alt="" decoding="async">
+            </a>
+            <div class="project-copy">
+              <h3><a href="https://clankerfront.com/">Clankerfront</a></h3>
+              <p>Classic isometric real-time strategy.</p>
+              <p class="project-status project-status-paused">Paused</p>
+              <a class="project-url" href="https://clankerfront.com/">clankerfront.com</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="project-panel project-panel-apps" id="apps-panel">
+        <ul class="projects">
+          <li class="project">
+            <a class="project-image" href="https://neversleep.app/" aria-label="Visit Never Sleep">
+              <img src="/images/never-sleep.webp" srcset="/images/never-sleep.webp 1x, /images/never-sleep@2x.webp 2x" width="88" height="88" alt="" decoding="async">
+            </a>
+            <div class="project-copy">
+              <h3><a href="https://neversleep.app/">Never Sleep</a></h3>
+              <p>Keep your Android screen on.</p>
+              <a class="project-url" href="https://neversleep.app/">neversleep.app</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </fieldset>
+</section>
+<section id="writing" class="writing-section" aria-labelledby="writing-title">
+  <h2 id="writing-title">Blog</h2>
+  {{posts}}
+  {{allPostsLink}}
+</section>

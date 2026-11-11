@@ -1,0 +1,40 @@
+LIZZ STUDIO — CONCEPT NOTES
+Generated with the built-in image_gen tool. Prompt set: prompts.json.
+These are raster concept images, not implemented site pages.
+
+Recommendation: 01-compact-slate.png
+The smallest useful home page: identity, one short introduction, three projects and a writing list.
+02-project-led-slate.png uses larger media and a longer page.
+03-light-slate.png explores a cool light background and left identity column.
+
+Source research:
+Current blog: views/layout.html, views/index.html, views/about.html, public/style.css, original 2024 article, https://lizz.dev/
+Never Sleep: https://neversleep.app/ and local landing icon.
+Clankerfront: https://clankerfront.com/en and actual battle screenshot.
+Chop Farms: https://chopfarms.com/, ~/src/unity/ChopFarmsRTS/art/press-kit/
+Studio mark: art/press-kit/exports/studio/icon_master_1024x1024.png
+Game icon: Assets/Art/AppIcons/Default.png
+Game still: art/press-kit/frames/forest-battle.jpg
+
+Decisions:
+Use the existing Lizz Studio identity and gecko mark.
+Project order follows the brief: Never Sleep, Clankerfront, Chop Farms.
+Clankerfront is grayscale and explicitly Stalled, following the owner's current status over the public site's in-development copy.
+Writing stays secondary to the portfolio.
+The existing article appears with the editorial concept title Hello world; its source title and published URL are untouched.
+Only concept files were added. No deployment or site implementation was performed.
+
+Design skill:
+Direction The dark room; seed 155936813.
+Work blueprint redrawn to Quiet ledger, side preview because three projects and a compact page do not suit a loose scattered gallery.
+User requirements for simplicity override the skill's large imagery, decorative compositions, interaction and motion prescriptions.
+All three are concept variations, not full implementations of the randomized sheet.
+
+Visual review:
+All three preserve the project order, real identity, real project art and visible stalled treatment.
+Concept 1 provides the strongest compact hierarchy and least duplication.
+Concept 2 is more visual but repeats app icons; omit duplicate thumbnails if implemented.
+Concept 3 is restrained but its grey links would need accessible contrast checks in actual CSS.
+Generated background shading and raster lettering are illustrative; implement flat colors and real accessible text in the selected design.
+No browser inspector or runtime tests apply to these raster concepts.
+

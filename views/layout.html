@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="robots" content="{{robots}}">
+  <meta name="author" content="Lizz">
+  <meta name="theme-color" content="#172128">
+  <meta name="color-scheme" content="dark">
+  {{canonicalLink}}
+  <meta property="og:type" content="{{ogType}}">
+  <meta property="og:site_name" content="Lizz Studio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="https://lizz.dev/social.jpg?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Lizz Studio. Independent apps and games: Never Sleep, Chop Farms and Clankerfront.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Lizzergas">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:image" content="https://lizz.dev/social.jpg?v=1">
+  <meta name="twitter:image:alt" content="Lizz Studio. Independent apps and games.">
+  {{articleMeta}}
+  <link rel="icon" href="/favicon.ico?v=3" sizes="16x16 32x32 48x48">
+  <link rel="icon" type="image/png" href="/favicon.png?v=3" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" sizes="180x180">
+  <link rel="manifest" href="/site.webmanifest?v=1">
+  <link rel="alternate" type="application/rss+xml" title="Lizz Studio blog" href="/feed.xml">
+  <link rel="stylesheet" href="/style.css?v=15">
+  {{structuredData}}
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Lizz Studio home" {{homeCurrent}}>
+        <img class="studio-icon" src="/images/studio.webp" srcset="/images/studio.webp 1x, /images/studio@2x.webp 2x" width="44" height="44" alt="">
+        <span>Lizz Studio</span>
+      </a>
+      <nav class="navigation" aria-label="Main navigation">
+        <a href="/blog" {{blogCurrent}}>Blog</a>
+        <a href="/about" {{aboutCurrent}}>About</a>
+      </nav>
+    </header>
+    <aside class="studio-sidebar" aria-label="Studio">
+      <p class="studio-description">A small studio building useful software and real-time strategy games.</p>
+    </aside>
+    <main id="main" class="content-column" tabindex="-1">
+      {{content}}
+    </main>
+    <footer class="site-footer">
+      <address class="studio-contact">
+        <span>Contact</span>
+        <a href="mailto:home@lizz.dev">home@lizz.dev</a>
+      </address>
+      <div class="studio-social">
+          <a href="https://x.com/Lizzergas" rel="me" aria-label="X">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <rect width="24" height="24" rx="5" fill="#000"/>
+              <path fill="#fff" transform="translate(4 4) scale(.666667)" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.64 7.584H.47l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@LizzStudio" rel="me" aria-label="YouTube">
+            <svg class="social-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path fill="#ff0033" d="M5 4a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h14a4 4 0 0 0 4-4V8a4 4 0 0 0-4-4H5Z"/>
+              <path fill="#fff" d="M10 8v8l6-4-6-4Z"/>
+            </svg>
+          </a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+LIZZ STUDIO BACKGROUND STUDIES
+Mode: built-in image_gen. Prompt set: prompts.json.
+Preview only: no application source, production assets, deployment or Git commits changed.
+
+01-faceted-slate.png: low-contrast faceted terrain, closest to the reference's actual ground treatment.
+02-corner-groves.png: recommended small tree clusters around empty corners; more personality with quiet content.
+03-forest-edge.png: a more visible lower forest border, with a stronger game-studio association.
+
+Reference: the user's attached Chop Farms screenshot and the current lizz.dev template rendered locally to current-layout.png.
+Local source inspection: chopfarms-website/src/assets/ground.svg and ground-band.svg, referenced in site.css.
+Those assets are faceted low-poly ground; the literal trees are a new concept interpretation of the user's request.
+
+The concepts preserve current typography, sidebar, projects, selected Games category, Writing preview and social links.
+These are generated concept screenshots. Small raster text or scale differences are illustrative; a future implementation would use real HTML text and keep the actual layout precise.
+If selected, the background can be prepared as a lightweight static decorative asset, with clear text areas and a plain slate fallback; no 3D runtime is needed.
+

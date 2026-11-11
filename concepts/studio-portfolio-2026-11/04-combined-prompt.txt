@@ -1,0 +1,14 @@
+Generated with the built-in image_gen tool.
+References: 01-compact-slate.png (palette), 03-light-slate.png (layout).
+
+Use case: ui-mockup, precise edit of a website concept.
+Image 1 is a COLOR REFERENCE ONLY (dark slate concept 1). Image 2 is the LAYOUT EDIT TARGET (light slate concept 3).
+Produce ONE final revised desktop website concept screenshot. Keep Image 2's exact two-column layout, overall landscape canvas proportions, spacing, typography scale, left studio identity column, tiny yellow/green gecko mark, left navigation, right project list, writing section and footer. Do not blend the layouts: use the layout of Image 2 exclusively.
+CHANGE ONLY:
+1. Replace Image 2's light background and dark ink with Image 1's dark slate color scheme. Use a flat, uniform dark slate background #172128, off-white #f2f3f2 headings, readable soft slate secondary text #b8c2ca. No gradient, no texture, no shadows, no effects. Keep actual colored logo and project icons unchanged.
+2. Reorder entire project rows, including the corresponding icon, title, description, domain and status. Exact top-to-bottom order must be:
+FIRST: Never Sleep. Moon icon. "Keep your Android screen on." Domain "neversleep.app".
+SECOND: Chop Farms. Existing green orc and bearded human icon. "Fantasy real-time strategy for PC and mobile." Status "In development". Domain "chopfarms.com".
+THIRD: Clankerfront. Existing game screenshot icon completely grayscale. "Classic isometric real-time strategy." Status "Stalled" plainly beside title. Domain "clankerfront.com". Keep the entire Clankerfront row more muted and greyed out than the active projects but still legible.
+Preserve exact remaining text from image 2: "Lizz Studio", "Independent apps and games.", "A small studio building useful software and real-time strategy games.", navigation "Work", "Writing", "Contact", headings "Projects", "Writing", one article "Hello world" with date "Jul 19, 2024", footer "home@lizz.dev" and "lizz.dev".
+Do not add cards, buttons, borders, large screenshots, extra content, browser chrome, perspective, device frames, decorative elements or concept annotations. This must look like a simple, professional, finished flat website screenshot.

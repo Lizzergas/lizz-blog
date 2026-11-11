@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lizz Studio concepts</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:var(--font-sans,system-ui,sans-serif);color:var(--foreground,#eee)}button{font:inherit;cursor:pointer}nav{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}nav button{padding:10px 13px;border:1px solid var(--border,#444);border-radius:var(--radius,6px);background:var(--secondary,#222);color:var(--foreground,#eee);font-size:14px}nav button[aria-pressed=true]{background:var(--primary,#ddd);color:var(--primary-foreground,#171717)}button:focus-visible{outline:2px solid var(--ring,#99aaff);outline-offset:3px}p{font-size:14px;line-height:1.5;color:var(--muted-foreground,#aaa);margin:0 0 14px}figure{margin:0}img{display:block;width:100%;height:auto}figure[hidden]{display:none}
+</style></head><body>
+<nav aria-label="Concept selection">
+<button type="button" aria-pressed="true" data-view="a">1 · Compact slate</button>
+<button type="button" aria-pressed="false" data-view="b">2 · Project images</button>
+<button type="button" aria-pressed="false" data-view="c">3 · Light slate</button>
+</nav>
+<p id="description">Recommended: a short studio introduction, three project rows, and a small writing section.</p>
+<figure id="a"><img src="/Users/skommy/src/lizz-blog/concepts/studio-portfolio-2026-11/01-compact-slate.png" alt="Compact dark slate Lizz Studio concept, with three project rows and a writing section"></figure>
+<figure id="b" hidden><img src="/Users/skommy/src/lizz-blog/concepts/studio-portfolio-2026-11/02-project-led-slate.png" alt="Lizz Studio concept with larger project images beside each project"></figure>
+<figure id="c" hidden><img src="/Users/skommy/src/lizz-blog/concepts/studio-portfolio-2026-11/03-light-slate.png" alt="Light slate Lizz Studio concept with identity column at left and projects and writing at right"></figure>
+<script>
+const descriptions={a:'Recommended: a short studio introduction, three project rows, and a small writing section.',b:'More visual: the same simple structure with larger project artwork beside each description.',c:'Light alternative: a cool slate background, a compact identity column, and a simple project list.'};
+document.querySelectorAll('nav button').forEach(button=>button.addEventListener('click',()=>{
+const view=button.dataset.view;
+document.querySelectorAll('nav button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+document.querySelectorAll('figure').forEach(f=>f.hidden=f.id!==view);
+document.querySelector('#description').textContent=descriptions[view];
+}));
+</script></body></html>

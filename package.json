@@ -1,0 +1,22 @@
+{
+  "name": "lizz-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "dev": "wrangler dev --port 8080",
+    "test": "node --test",
+    "deploy": "npm test && wrangler deploy"
+  },
+  "dependencies": {
+    "marked": "18.1.1",
+    "parse5": "8.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "4.158.0"
+  }
+}

@@ -1,137 +1,123 @@
-# Lizz's Blog Engine
+# lizz.dev
 
-A modern, animated, and component-based blog engine built with Ktor, htmx, and Tailwind CSS. This project uses server-side rendering with `kotlinx.html` to create a fast and dynamic user experience.
+Lizz Studio's portfolio and Markdown blog. Plain HTML and CSS, generated ahead of time by a small Node.js build script and served as static files by Cloudflare Workers Static Assets. There is no runtime server, frontend framework, database, web-font request, analytics or client-side router. Markdown and HTML parsers run only at build time to prepare article content and metadata.
 
-## Features
+## Run locally
 
-*   **Backend**: [Ktor](https://ktor.io/) for handling routes and server logic.
-*   **Frontend**: [htmx](https://htmx.org/) for seamless AJAX-powered navigation without writing complex JavaScript.
-*   **Styling**: [Tailwind CSS](https://tailwindcss.com/) (via the JIT CDN) for rapid, utility-first styling.
-*   **Templating**: [kotlinx.html](https://github.com/Kotlin/kotlinx.html) for type-safe, server-side HTML rendering.
-*   **Animations**: Smooth page transitions via the View Transitions API and custom CSS animations for a retro, terminal-like aesthetic.
-*   **Content**: Blog posts are written in Markdown and loaded dynamically.
+Use **Node.js 24 LTS** (also specified in .nvmrc).
 
-## Project Structure
-
-The project is organized into a component-based and page-based architecture to promote reusability and separation of concerns.
-
-```
-/
-├── build.gradle.kts        # Project dependencies and build configuration
-├── src/
-│   ├── main/
-│   │   ├── kotlin/com/lizz/
-│   │   │   ├── Application.kt  # Main Ktor application setup
-│   │   │   ├── Blog.kt         # BlogService for loading and parsing Markdown posts
-│   │   │   ├── Components.kt   # Shared, reusable UI components (the design system)
-│   │   │   ├── Routing.kt      # Defines all application routes
-│   │   │   └── pages/          # Contains the rendering logic for each page
-│   │   │       ├── AboutPage.kt
-│   │   │       ├── BlogPage.kt
-│   │   │       ├── IndexPage.kt
-│   │   │       └── TestPage.kt
-│   │   └── resources/
-│   │       ├── application.yaml # Ktor configuration
-│   │       ├── blogs/           # Markdown content for blog posts
-│   │       │   └── _index.txt   # Index of blog posts to load
-│   │       └── static/
-│   │           ├── style.css    # Custom CSS for animations and styling
-│   │           └── favicon.png
-│   └── test/
-└── README.md               # This file
+```sh
+npm ci
+npm run dev    # builds dist/ and serves it with wrangler dev on http://localhost:8080
+npm test
 ```
 
-## How It Works
+npm run dev uses Cloudflare's real asset routing, _headers and 404 handling, and rebuilds when content, views, public files or the build scripts change. npm run build writes dist/ without serving it.
 
-The application follows a simple request-response cycle, with the frontend enhanced by htmx.
+## Structure and design
 
-1.  A user requests a URL (e.g., `/`).
-2.  Ktor's routing mechanism in `Routing.kt` maps the URL to a handler function (e.g., `call.respondIndexPage()`).
-3.  The handler function, located in the `pages/` directory, is called.
-4.  This function uses UI components from `Components.kt` and `kotlinx.html` to build the HTML page server-side.
-5.  The complete HTML page is sent to the browser.
-6.  `htmx` intercepts clicks on links. Instead of a full page reload, it fetches the new page via AJAX and smoothly swaps the `<body>` content. The View Transitions API, enabled via `hx-ext="view-transitions"`, handles the animation.
+- views/layout.html: studio topbar with Blog/About navigation, studio description, contact footer and metadata.
+- views/index.html: projects and recent writing.
+- views/blog.html: the complete writing index at /blog.
+- views/post.html: article layout. The published /blog/hello-world-old URL is preserved.
+- views/about.html: the retained /about page.
+- public/style.css: the dark slate layout, with a round gecko icon and navigation in the topbar, a short studio description, project tabs, a contact footer and responsive phone layout. Category panels use a restrained 180ms fade and vertical transition. On hover-capable fine pointers, project icons smoothly scale up 6% on hover or keyboard focus and return when leaving. Both effects respect reduced motion.
+- public/images/: local WebP icons at normal and double resolution, plus the static Forest edge background.
+- No page ships executable JavaScript. Article copying has been removed.
+- content/posts/: trusted Markdown posts.
+- site.js: template rendering, per-page metadata, structured data and RSS.
+- build.js: writes every page, robots.txt, sitemap.xml, feed.xml, the public assets and Cloudflare's _headers into dist/.
+- wrangler.jsonc: the static-assets Worker, clean URLs, 404 handling and the lizz.dev/www.lizz.dev custom domains.
+- test/site.test.js: build output, metadata, headers, Wrangler configuration and Markdown regression tests.
 
-## Development Guide
+Projects are split into Games and Apps tabs. Games is selected by default and shows Chop Farms followed by Clankerfront; Apps contains only Never Sleep. Native radio controls and CSS provide switching, animation and keyboard support without JavaScript. Both panels share one grid cell so writing below them stays in place while switching; the inactive panel cannot receive focus. Clankerfront's image is preconverted to grayscale and its text is muted. Status labels sit below each game's description: muted green In development for Chop Farms, muted amber Paused for Clankerfront. The words also communicate status without relying on color.
 
-This project is designed to be easy to extend. Here’s how to add new components and pages.
+The approved reference is concepts/studio-portfolio-2026-11/04-combined-dark-slate.png. Concept files are not copied into dist/ or published. Blog and About sit in the topbar; the studio mark links home, so there is no redundant Work link. Contact, email and the X/YouTube icons sit in a compact footer after the content. Phones show the studio description followed directly by Projects. The same social profiles remain in Organization structured data. There is no GitHub link or redundant introductory headline.
 
-### How to Create a New Component
+The X and YouTube links use icons only: a white X on black and a red YouTube button with a white play triangle. The inline SVGs are 24px inside 44px touch targets. Each link keeps an aria-label; decorative icons are hidden from assistive technology and cannot receive focus. They require no additional image requests or dependencies. Brand references: https://about.x.com/en/who-we-are/brand-toolkit and https://brand.youtube/.
 
-Components are reusable pieces of UI defined as Kotlin extension functions in `src/main/kotlin/com/lizz/Components.kt`.
+### Assets
 
-1.  **Open `Components.kt`**.
-2.  **Create a new `internal` function**. Most components will be extensions on `FlowContent`, which allows them to be used inside most HTML tags (like `div`).
-3.  **Example**: Let's create a simple alert box component.
+The studio mark and Chop Farms icon come from the ChopFarmsRTS press kit and app assets. Never Sleep uses its existing landing-site icon; Clankerfront uses its public battle screenshot. Optimized production copies are committed under public/; the original sibling repositories are not needed to run or deploy this site.
 
-    ```kotlin
-    // In Components.kt
-    internal fun FlowContent.alert(message: String, level: String = "info") {
-        val colorClasses = when (level) {
-            "success" -> "bg-emerald-900 border-emerald-700 text-emerald-300"
-            "error" -> "bg-red-900 border-red-700 text-red-300"
-            else -> "bg-sky-900 border-sky-700 text-sky-300"
-        }
-        div(classes = "border rounded-lg p-4 $colorClasses") {
-            +message
-        }
-    }
-    ```
-4.  **Use the component** in any page file: `alert("This is an informational message.")`
+The favicon set includes multi-size ICO, PNG, Apple touch icon, 192/512 PNG icons and a web manifest. A real 1200×630 JPEG provides social previews. The studio mark is circular in the UI and favicon images.
 
-### How to Create a New Page
+The approved Forest edge concept is concepts/background-studies-2026-11/03-forest-edge.png. Its background-only artwork was generated with the built-in image tool, then optimized to public/images/forest-edge.webp. The source and full generation prompt are saved in concepts/forest-edge-implementation-2026-11/. A non-interactive fixed CSS layer anchors the illustration to the visible screen, so trees are present before scrolling and add no page height. It avoids mobile Safari's background-attachment: fixed behavior. Phone screens use a smaller, quieter grove on the right; shorter desktop windows use tighter vertical spacing. It adds no scripts, animation or layout shift.
 
-1.  **Create a new page file** in `src/main/kotlin/com/lizz/pages/`. For example, `ContactPage.kt`.
-2.  **Define a handler function** inside the new file. This function should be an extension on `ApplicationCall`.
+After changing an existing deployed asset, bump its version query wherever it is referenced, including metadata/social image URLs. Images use short caching plus ETags; they do not claim immutable URLs.
 
-    ```kotlin
-    // In pages/ContactPage.kt
-    package com.lizz.pages
+## Publishing posts
 
-    import com.lizz.*
-    import io.ktor.server.application.*
-    import io.ktor.server.html.*
+Create content/posts/YYYY-MM-DD-your-post-slug.md:
 
-    internal suspend fun ApplicationCall.respondContactPage() {
-        respondHtml {
-            page(this@respondContactPage, "Contact • lizz.dev") {
-                mainContent {
-                    pageHeader("Contact Me")
-                    p(classes = "mt-4 text-neutral-300") {
-                        +"You can reach me via email."
-                    }
-                }
-            }
-        }
-    }
-    ```
-3.  **Register the new route** in `src/main/kotlin/com/lizz/Routing.kt`.
+```md
+# My post title
 
-    ```kotlin
-    // In Routing.kt
-    import com.lizz.pages.respondContactPage // Add this import
+A short opening paragraph, also used as the description and RSS excerpt.
 
-    // ... inside configureRouting -> routing
-    get("/contact") {
-        call.respondContactPage()
-    }
-    ```
+## More detail
 
-### How to Write a New Blog Post
+Write the rest in Markdown.
+```
 
-1.  Create a new Markdown file in `src/main/resources/blogs/`.
-2.  The filename **must** follow the format `YYYY-MM-DD-your-post-slug.md`.
-3.  The first H1 heading (`# My Post Title`) in the file will be used as the post title.
-4.  Add the new filename (e.g., `2025-09-05-my-new-post.md`) to a new line in `src/main/resources/blogs/_index.txt`. This tells the `BlogService` to load it.
+The filename supplies the publication date and /blog/your-post-slug URL. The first top-level Markdown H1 supplies the title and is removed from the body. Titles and previews use readable text from parsed HTML, preserving code identifiers and decoding character references. Remaining Markdown and authored HTML H1s become H2 section headings, including in blockquotes and lists, so the page has one article H1. Literal headings in code examples stay intact. Without a non-empty top-level Markdown H1, the title is derived from the slug. Invalid dates/filenames and duplicate slugs fail the build.
 
-## Building & Running
+The home page shows the latest five listed post previews under Blog, with All posts when there are more. Each preview shows the first three opening sentences (up to 420 characters) and links to the full article. /blog and /feed.xml contain listed posts. Pages, sitemap and feed are generated by the build, so deploy after publishing. npm run dev rebuilds on change.
 
-To build or run the project, use the corresponding Gradle tasks.
+To delist a post without breaking its published URL, put `<!-- unlisted -->` at the start of its Markdown file, before the title. Unlisted posts remain readable at their URL with noindex metadata and are excluded from home/blog listings, RSS and the sitemap. This is delisting, not access control. Hello world is currently unlisted.
 
-| Task          | Description                                 |
-|---------------|---------------------------------------------|
-| `./gradlew run` | Run the application locally.                |
-| `./gradlew test`  | Run the tests.                              |
-| `./gradlew build` | Build the project and create artifacts.   |
+The title-only announcement stub is `content/posts/2026-11-10-announcing-lizz-studio.md`. Add the article text below its heading when ready. Empty previews are omitted; no placeholder copy is generated.
 
-The server will start on `http://0.0.0.0:8080`.
+In blog listings, dates follow their titles with a 16px gap and smaller muted text, without a separator. The date wraps below the title when space is limited.
+
+Markdown allows author-supplied HTML. Only commit trusted content; this is not a public Markdown submission service. Template values and JSON-LD strings are escaped, and CSP restricts script execution.
+
+## SEO and HTTP behavior
+
+All content and links are present in the initial HTML and readable without JavaScript. Pages have unique titles/descriptions, fixed https://lizz.dev canonical URLs, Open Graph/Twitter cards and schema.org Organization, WebSite and page/article data. Articles include the actual publication date and author. Social previews use the same studio image; article-specific artwork can be added later.
+
+- /robots.txt allows crawling and points to /sitemap.xml.
+- /sitemap.xml lists only canonical public HTML pages.
+- /feed.xml is an RSS feed served as application/rss+xml, also linked in each page's head.
+- Unknown routes return HTTP 404 with the noindex not-found page, without a canonical tag. The /404 path itself returns that page with 200; it is noindex and absent from the sitemap.
+- Only files written to dist/ are public: generated pages, crawler files and the contents of public/. Source, content and concept files are never uploaded.
+- Clean URLs: /blog is served from blog.html. Trailing-slash and .html URLs redirect (307) to the clean URL. GET/HEAD are supported; other methods receive 405.
+- Cloudflare handles Brotli/gzip, ETags and conditional requests.
+- HTML revalidates on every request (Cloudflare's default public, max-age=0, must-revalidate). Static assets cache for an hour; crawler files/feed cache for five minutes.
+- A single site-wide CSP restricts resources to local assets, with no unsafe-inline or unsafe-eval. JSON-LD is a data block that browsers never execute, so it needs no script hash.
+- Headers include HSTS, framing protection, nosniff, a referrer policy, same-origin resource policy and restricted browser permissions. The workers.dev preview host adds X-Robots-Tag: noindex.
+- No cookies, forms, authentication or writable public endpoints are introduced.
+
+Cloudflare's Email Address Obfuscation must stay off for the lizz.dev zone: it would rewrite the footer mailto link and inject a script.
+
+## Validation
+
+Run npm test under Node 24. The tests build dist/ into a temporary directory and cover public pages, retained article content/date, project categories, metadata/schema, the exact published file set, crawler files/RSS, the 404 page, _headers security and caching rules, the Wrangler asset configuration, hostile metadata escaping, Markdown/HTML heading normalization, readable titles/previews, entities, reference links and preserved code identifiers.
+
+Browser evidence and the design review are generated under .taste-skill/ (ignored). The compact layout deliberately omits large hero media and footage. Check actual rendering, contrast, keyboard focus, narrow widths, no-JavaScript reading, preview navigation, category transitions and reduced-motion behavior when changing layout or CSP.
+
+No deployment is implied by passing local tests.
+
+## Deploy to Cloudflare Workers
+
+The site is a static-assets-only Worker named **lizz-blog** on the same Cloudflare account as chopfarms.com, on the Free plan. wrangler is a pinned dev dependency; log in once with npx wrangler login.
+
+```sh
+npm ci
+npm run deploy   # runs the tests, builds dist/ and uploads it with wrangler deploy
+```
+
+wrangler deploy also applies the lizz.dev and www.lizz.dev custom domains from wrangler.jsonc. The lizz.dev zone is active on Cloudflare; Hostinger remains the registrar and mail provider, and its MX, SPF, DKIM, DMARC and autodiscover/autoconfig records stay DNS only. Zone settings: a Redirect Rule (301) sends www.lizz.dev to https://lizz.dev with the path and query preserved, Always Use HTTPS is on, and Email Address Obfuscation is off.
+
+Wrangler manages the Worker and its deploys. For everything else in the zone (DNS records, rules, settings), use the Cloudflare CLI, cf (npm install -g cf, then cf auth login); for example cf zones settings get always_use_https -z lizz.dev.
+
+Verify after deployment:
+
+```sh
+curl -fsSI https://lizz.dev/
+curl -fsS https://lizz.dev/robots.txt
+curl -fsS https://lizz.dev/sitemap.xml
+curl -fsSI https://www.lizz.dev/blog
+```
+
+Check /, /blog, /about and /blog/hello-world-old in a browser, plus the circular icon and social card. Roll back with npx wrangler rollback, or pick an earlier version under Workers & Pages > lizz-blog > Deployments.

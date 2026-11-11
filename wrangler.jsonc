@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lizz-blog",
+  "account_id": "c8cb229c506036690a49f0173ccd1631",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "build": {
+    "command": "node build.js",
+    "watch_dir": ["content", "views", "public", "site.js", "posts.js", "build.js"]
+  },
+  "assets": {
+    "directory": "./dist",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": false },
+  "routes": [
+    { "pattern": "lizz.dev", "custom_domain": true },
+    { "pattern": "www.lizz.dev", "custom_domain": true }
+  ]
+}
