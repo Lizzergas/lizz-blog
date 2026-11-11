@@ -30,7 +30,7 @@ npm run dev uses Cloudflare's real asset routing, _headers and 404 handling, and
 - wrangler.jsonc: the static-assets Worker, clean URLs, 404 handling and the lizz.dev/www.lizz.dev custom domains.
 - test/site.test.js: build output, metadata, headers, Wrangler configuration and Markdown regression tests.
 
-Projects are split into Games and Apps tabs. Games is selected by default and shows Chop Farms followed by Clankerfront; Apps contains only Never Sleep. Native radio controls and CSS provide switching, animation and keyboard support without JavaScript. Both panels share one grid cell so writing below them stays in place while switching; the inactive panel cannot receive focus. Clankerfront's image is preconverted to grayscale and its text is muted. Status labels sit below each game's description: muted green In development for Chop Farms, muted amber Paused for Clankerfront. The words also communicate status without relying on color.
+Projects are split into Games and Apps tabs. Games is selected by default and shows Chop Farms followed by Clankerfront; Apps shows Never Sleep followed by NX Block Reason, a Chrome extension linked to its Chrome Web Store page, in the same icon, name, one-line description and link format with no status label. Native radio controls and CSS provide switching, animation and keyboard support without JavaScript. Both panels share one grid cell so writing below them stays in place while switching; the inactive panel cannot receive focus. Clankerfront's image is preconverted to grayscale and its text is muted. Status labels sit below each game's description: muted green In development for Chop Farms, muted amber Paused for Clankerfront. The words also communicate status without relying on color.
 
 The approved reference is concepts/studio-portfolio-2026-11/04-combined-dark-slate.png. Concept files are not copied into dist/ or published. Blog and About sit in the topbar; the studio mark links home, so there is no redundant Work link. Contact, email and the X/YouTube icons sit in a compact footer after the content. Phones show the studio description followed directly by Projects. The same social profiles remain in Organization structured data. There is no GitHub link or redundant introductory headline.
 
@@ -38,7 +38,7 @@ The X and YouTube links use icons only: a white X on black and a red YouTube but
 
 ### Assets
 
-The studio mark and Chop Farms icon come from the ChopFarmsRTS press kit and app assets. Never Sleep uses its existing landing-site icon; Clankerfront uses its public battle screenshot. Optimized production copies are committed under public/; the original sibling repositories are not needed to run or deploy this site.
+The studio mark and Chop Farms icon come from the ChopFarmsRTS press kit and app assets. Never Sleep uses its existing landing-site icon; NX Block Reason uses its extension icon (from the nx-block-reason repository) rendered full-bleed so the site's CSS rounds it like the others; Clankerfront uses its public battle screenshot. Optimized production copies are committed under public/; the original sibling repositories are not needed to run or deploy this site.
 
 The favicon set includes multi-size ICO, PNG, Apple touch icon, 192/512 PNG icons and a web manifest. A real 1200×630 JPEG provides social previews. The studio mark is circular in the UI and favicon images.
 

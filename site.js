@@ -82,7 +82,7 @@ export function createPages(posts = loadPosts()) {
     }));
   }
   add('/', 'Lizz Studio — Apps and games',
-    'Independent apps and real-time strategy games by Lizz Studio. Explore Never Sleep, Chop Farms and Clankerfront, and read notes from development.',
+    'Independent apps and real-time strategy games by Lizz Studio. Explore Never Sleep, NX Block Reason, Chop Farms and Clankerfront, and read notes from development.',
     render('index', {}, {
       posts: postList(listedPosts.slice(0, 5)),
       allPostsLink: listedPosts.length > 5 ? '<a class="all-posts-link" href="/blog">All posts</a>' : '',

@@ -77,7 +77,9 @@ test('home groups games and apps, with Games selected and Clankerfront paused', 
   assert.ok(games.indexOf('Chop Farms') < games.indexOf('Clankerfront'));
   assert.match(games, /project-paused[^]*Paused/);
   assert.doesNotMatch(games, /Never Sleep/);
-  assert.match(apps, /Never Sleep/);
+  assert.ok(apps.indexOf('Never Sleep') < apps.indexOf('NX Block Reason'));
+  assert.match(apps, /href="https:\/\/chromewebstore\.google\.com\/detail\/lpachpbhakbelinpekpfmhielidfjloi"/);
+  assert.doesNotMatch(apps, /project-status/);
   assert.doesNotMatch(apps, /Chop Farms|Clankerfront/);
   assert.match(html, /class="post-preview" href="\/blog\/announcing-lizz-studio"/);
   assert.match(html, /class="post-preview-title">Announcing Lizz Studio<\/h3>/);
@@ -116,7 +118,7 @@ test('the build publishes exactly the pages, crawler files and public assets', (
   assert.deepEqual(listFiles(dist).sort(), expected);
   for (const path of ['style.css', 'images/forest-edge.webp', 'favicon.ico', 'social.jpg', 'site.webmanifest',
     ...['favicon', 'apple-touch-icon', 'icon-192', 'icon-512'].map(name => name + '.png'),
-    ...['studio', 'never-sleep', 'chop-farms', 'clankerfront'].flatMap(name =>
+    ...['studio', 'never-sleep', 'nx-block-reason', 'chop-farms', 'clankerfront'].flatMap(name =>
       ['', '@2x'].map(scale => 'images/' + name + scale + '.webp'))]) {
     assert.ok(readFileSync(join(dist, path)).byteLength > 0, path);
   }
