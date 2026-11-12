@@ -78,7 +78,7 @@ test('home groups games and apps, with Games selected and Clankerfront paused', 
   assert.match(games, /project-paused[^]*Paused/);
   assert.doesNotMatch(games, /Never Sleep/);
   assert.ok(apps.indexOf('Never Sleep') < apps.indexOf('NX Block Reason'));
-  assert.match(apps, /href="https:\/\/chromewebstore\.google\.com\/detail\/lpachpbhakbelinpekpfmhielidfjloi"/);
+  assert.match(apps, /href="https:\/\/chromewebstore\.google\.com\/detail\/nx-block-reason\/lpachpbhakbelinpekpfmhielidfjloi"/);
   assert.doesNotMatch(apps, /project-status/);
   assert.doesNotMatch(apps, /Chop Farms|Clankerfront/);
   assert.match(html, /class="post-preview" href="\/blog\/announcing-lizz-studio"/);
