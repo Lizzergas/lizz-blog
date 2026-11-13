@@ -57,12 +57,18 @@ export function build(outDir = join(root, 'dist'), posts = loadPosts()) {
       '<url><loc>' + escapeHtml(origin + path) + '</loc></url>').join('') + '</urlset>');
   write('robots.txt', 'User-agent: *\nAllow: /\nSitemap: ' + origin + '/sitemap.xml\n');
   write('feed.xml', createFeed(posts));
+  const securityExpiry = new Date();
+  securityExpiry.setUTCFullYear(securityExpiry.getUTCFullYear() + 1);
+  write('.well-known/security.txt', 'Contact: mailto:home@lizz.dev\n' +
+    'Expires: ' + securityExpiry.toISOString() + '\nPreferred-Languages: en\n' +
+    'Canonical: ' + origin + '/.well-known/security.txt\n');
 
   write('_headers', [
     headerRule('/*', securityHeaders),
     ...['/style.css', '/images/*', '/favicon.ico', '/favicon.png', '/apple-touch-icon.png',
       '/icon-192.png', '/icon-512.png', '/social.jpg', '/site.webmanifest']
       .map(path => headerRule(path, { 'Cache-Control': assetCache })),
+    headerRule('/.well-known/security.txt', { 'Cache-Control': crawlerCache, 'Content-Type': 'text/plain; charset=utf-8' }),
     headerRule('/robots.txt', { 'Cache-Control': crawlerCache }),
     headerRule('/sitemap.xml', { 'Cache-Control': crawlerCache }),
     headerRule('/feed.xml', { 'Cache-Control': crawlerCache, 'Content-Type': 'application/rss+xml; charset=utf-8' }),

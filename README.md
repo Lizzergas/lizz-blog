@@ -107,7 +107,7 @@ npm ci
 npm run deploy   # runs the tests, builds dist/ and uploads it with wrangler deploy
 ```
 
-wrangler deploy also applies the lizz.dev and www.lizz.dev custom domains from wrangler.jsonc. The lizz.dev zone is active on Cloudflare; Hostinger remains the registrar and mail provider, and its MX, SPF, DKIM, DMARC and autodiscover/autoconfig records stay DNS only. Zone settings: a Redirect Rule (301) sends www.lizz.dev to https://lizz.dev with the path and query preserved, Always Use HTTPS is on, and Email Address Obfuscation is off.
+wrangler deploy also applies the lizz.dev and www.lizz.dev custom domains from wrangler.jsonc. The lizz.dev zone is active on Cloudflare; Hostinger remains the registrar and mail provider, and its MX, SPF, DKIM, DMARC and autodiscover/autoconfig records stay DNS only. The build publishes `/.well-known/security.txt` with `home@lizz.dev` and an expiry renewed for one year on each build; renew it before expiry if the site stops publishing. DMARC aggregate reporting goes to Cloudflare while `p=none` stays in place until legitimate senders have been checked. Zone settings: a Redirect Rule (301) sends www.lizz.dev to https://lizz.dev with the path and query preserved, Always Use HTTPS is on, and Email Address Obfuscation is off.
 
 Wrangler manages the Worker and its deploys. For everything else in the zone (DNS records, rules, settings), use the Cloudflare CLI, cf (npm install -g cf, then cf auth login); for example cf zones settings get always_use_https -z lizz.dev.
 

@@ -111,7 +111,7 @@ test('unlisted original article keeps its URL, body and date with noindex metada
 
 test('the build publishes exactly the pages, crawler files and public assets', () => {
   const expected = [
-    '_headers', '404.html', 'about.html', 'blog.html', 'index.html', 'feed.xml', 'robots.txt', 'sitemap.xml',
+    '.well-known/security.txt', '_headers', '404.html', 'about.html', 'blog.html', 'index.html', 'feed.xml', 'robots.txt', 'sitemap.xml',
     ...loadPosts().map(post => 'blog/' + post.slug + '.html'),
     ...listFiles(new URL('../public/', import.meta.url).pathname).filter(name => !name.split('/').some(part => part.startsWith('.'))),
   ].sort();
